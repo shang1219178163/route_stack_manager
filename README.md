@@ -22,24 +22,24 @@ in PageFive:
   }
 ```
 
-[log] DLog 2024-09-28 10:46:16.173479 RouteManager: {
-  "isDebug": true,
-  "routes": [
-    "MaterialPageRoute<dynamic>(RouteSettings(\"/\", null), animation: AnimationController#38614(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/)))",
-    "MaterialPageRoute<dynamic>(RouteSettings(\"/PageOne\", null), animation: AnimationController#bd787(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageOne)))",
-    "MaterialPageRoute<dynamic>(RouteSettings(\"/PageTwo\", null), animation: AnimationController#e1844(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageTwo)))",
-    "MaterialPageRoute<dynamic>(RouteSettings(\"/PageThree\", null), animation: AnimationController#4492e(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageThree)))",
-    "MaterialPageRoute<dynamic>(RouteSettings(\"/PageFour\", null), animation: AnimationController#a9e6b(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageFour)))",
-    "MaterialPageRoute<dynamic>(RouteSettings(\"/PageFive\", null), animation: AnimationController#911b9(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageFive)))"
-  ],
-  "routeNames": [
-    "/",
-    "/PageOne",
-    "/PageTwo",
-    "/PageThree",
-    "/PageFour",
-    "/PageFive"
-  ],
-  "preRouteName": "/PageFour",
-  "current": "/PageFive"
-}
+    [log] DLog 2024-09-28 10:46:16.173479 RouteManager: {
+      "isDebug": true,
+      "routes": [
+        "MaterialPageRoute<dynamic>(RouteSettings(\"/\", null), animation: AnimationController#38614(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/)))",
+        "MaterialPageRoute<dynamic>(RouteSettings(\"/PageOne\", null), animation: AnimationController#bd787(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageOne)))",
+        "MaterialPageRoute<dynamic>(RouteSettings(\"/PageTwo\", null), animation: AnimationController#e1844(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageTwo)))",
+        "MaterialPageRoute<dynamic>(RouteSettings(\"/PageThree\", null), animation: AnimationController#4492e(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageThree)))",
+        "MaterialPageRoute<dynamic>(RouteSettings(\"/PageFour\", null), animation: AnimationController#a9e6b(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageFour)))",
+        "MaterialPageRoute<dynamic>(RouteSettings(\"/PageFive\", null), animation: AnimationController#911b9(⏭ 1.000; paused; for MaterialPageRoute<dynamic>(/PageFive)))"
+      ],
+      "routeNames": [
+        "/",
+        "/PageOne",
+        "/PageTwo",
+        "/PageThree",
+        "/PageFour",
+        "/PageFive"
+      ],
+      "preRouteName": "/PageFour",
+      "current": "/PageFive"
+    }
