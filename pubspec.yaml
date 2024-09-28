@@ -1,6 +1,6 @@
 name: route_stack_manager
 description: "Flutter route stack manager"
-version: 0.0.1
+version: 0.1.0
 homepage: https://github.com/shang1219178163/route_stack_manager
 
 environment:
