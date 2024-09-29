@@ -11,6 +11,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'dart:developer' as developer;
 
+import 'package:flutter/material.dart';
+
 /// 路由堆栈管理器
 class RouteManager {
   static final RouteManager _instance = RouteManager._();
@@ -41,6 +43,15 @@ class RouteManager {
 
   /// 当前路由
   String? get current => currentRoute?.settings.name;
+
+  /// 当前路由类型是 PopupRoute
+  bool get isPopupOpen => currentRoute is PopupRoute;
+
+  /// 当前路由类型是 DialogRoute
+  bool get isDialogOpen => currentRoute is DialogRoute;
+
+  /// 当前路由类型是 ModalBottomSheetRoute
+  bool get isSheetOpen => currentRoute is ModalBottomSheetRoute;
 
   /// 进出堆栈过滤条件(默认仅支持PageRoute, 过滤弹窗)
   bool Function(Route<dynamic> route) filterRoute =
@@ -88,6 +99,10 @@ class RouteManager {
     data['routeNames'] = routeNames;
     data['preRouteName'] = preRouteName;
     data['current'] = current;
+    data['isPopupOpen'] = isPopupOpen;
+    data['isDialogOpen'] = isDialogOpen;
+    data['isSheetOpen'] = isSheetOpen;
+
     return data;
   }
 

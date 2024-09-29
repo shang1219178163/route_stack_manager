@@ -49,6 +49,10 @@ class _PageFiveState extends State<PageFive> {
         child: Column(
           children: [
             OutlinedButton(onPressed: onNext, child: const Text("next")),
+            OutlinedButton(
+                onPressed: showDialog, child: const Text("showDialog")),
+            OutlinedButton(
+                onPressed: showSheet, child: const Text("showSheet")),
           ],
         ),
       ),
@@ -56,6 +60,23 @@ class _PageFiveState extends State<PageFive> {
   }
 
   void onNext() {
+    DLog.d(RouteManager().toString());
+  }
+
+  void showDialog() {
+    showAboutDialog(context: context);
+    DLog.d(RouteManager().toString());
+  }
+
+  void showSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            height: 500,
+            color: Colors.yellow,
+          );
+        });
     DLog.d(RouteManager().toString());
   }
 }
