@@ -4,6 +4,7 @@ import 'package:route_stack_manager/route_stack_manager.dart';
 
 void main() {
   RouteManager().isDebug = true;
+  // RouteManager().filterRoute = (route) => true;
 
   runApp(const MyApp());
 }
