@@ -1,3 +1,7 @@
+## 0.1.1
+
+* TODO: lastRoute change to currentRoute.
+
 ## 0.1.0
 
 * TODO: readme update.

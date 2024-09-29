@@ -37,10 +37,10 @@ class RouteManager {
   String? get preRouteName => preRoute?.settings.name;
 
   /// 当前路由
-  Route<dynamic>? get lastRoute => routes.isEmpty ? null : routes.last;
+  Route<dynamic>? get currentRoute => routes.isEmpty ? null : routes.last;
 
   /// 当前路由
-  String? get current => lastRoute?.settings.name;
+  String? get current => currentRoute?.settings.name;
 
   /// 进出堆栈过滤条件(默认仅支持PageRoute, 过滤弹窗)
   bool Function(Route<dynamic> route) filterRoute =
