@@ -6,15 +6,12 @@
 //  Copyright © 2024/9/28 shang. All rights reserved.
 //
 
-
 import 'package:flutter/cupertino.dart';
 
 import 'route_manager.dart';
 
 /// 堆栈管理器路由监听器
 class RouteManagerObserver extends RouteObserver<PageRoute<dynamic>> {
-  PageRoute<dynamic>? currentRoute;
-
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
