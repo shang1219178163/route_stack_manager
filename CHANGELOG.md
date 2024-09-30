@@ -1,3 +1,8 @@
+## 0.1.2
+
+* TODO: change description.
+        Remove the warning.
+
 ## 0.1.1
 
 * TODO: lastRoute change to currentRoute.
