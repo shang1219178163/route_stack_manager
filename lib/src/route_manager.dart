@@ -43,14 +43,25 @@ class RouteManager {
   /// 当前路由
   String? get current => currentRoute?.settings.name;
 
+  /// PopupRoute 类型路由
+  PopupRoute? get popupRoute {
+    for (int i = routes.length - 1; i >= 0; i--) {
+      final e = routes[i];
+      if (e is PopupRoute) {
+        return e;
+      }
+    }
+    return null;
+  }
+
   /// 当前路由类型是 PopupRoute
-  bool get isPopupOpen => currentRoute is PopupRoute;
+  bool get isPopupOpen => popupRoute != null;
 
   /// 当前路由类型是 DialogRoute
-  bool get isDialogOpen => currentRoute is DialogRoute;
+  bool get isDialogOpen => popupRoute is DialogRoute;
 
   /// 当前路由类型是 ModalBottomSheetRoute
-  bool get isSheetOpen => currentRoute is ModalBottomSheetRoute;
+  bool get isSheetOpen => popupRoute is ModalBottomSheetRoute;
 
   /// 进出堆栈过滤条件(默认仅支持PageRoute, 过滤弹窗)
   bool Function(Route<dynamic> route) filterRoute =
@@ -98,6 +109,7 @@ class RouteManager {
     data['routeNames'] = routeNames;
     data['preRouteName'] = preRouteName;
     data['current'] = current;
+    data['popupRoute'] = popupRoute.toString();
     data['isPopupOpen'] = isPopupOpen;
     data['isDialogOpen'] = isDialogOpen;
     data['isSheetOpen'] = isSheetOpen;
