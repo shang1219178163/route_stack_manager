@@ -57,10 +57,10 @@ class RouteManager {
   /// 当前路由类型是 PopupRoute
   bool get isPopupOpen => popupRoute != null;
 
-  /// 当前路由类型是 DialogRoute
+  /// 路由堆栈包含 DialogRoute 类型
   bool get isDialogOpen => popupRoute is DialogRoute;
 
-  /// 当前路由类型是 ModalBottomSheetRoute
+  /// 路由堆栈包含 ModalBottomSheetRoute 类型
   bool get isSheetOpen => popupRoute is ModalBottomSheetRoute;
 
   /// 进出堆栈过滤条件(默认仅支持PageRoute, 过滤弹窗)
