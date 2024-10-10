@@ -19,11 +19,14 @@ class RouteManager {
   factory RouteManager() => _instance;
   static RouteManager get instance => _instance;
 
-  /// 是都打印日志
+  /// 是否打印日志
   bool isDebug = false;
 
-  /// 路由堆栈
+  /// 路由堆栈(满足 filterRoute 的)
   final List<Route<dynamic>> _routes = [];
+
+  /// 所有路由堆栈
+  final List<Route<dynamic>> _allRoutes = [];
 
   /// 当前路由堆栈
   List<Route<dynamic>> get routes => _routes;
@@ -45,8 +48,15 @@ class RouteManager {
 
   /// PopupRoute 类型路由
   PopupRoute? get popupRoute {
-    for (int i = routes.length - 1; i >= 0; i--) {
-      final e = routes[i];
+    // for (int i = routes.length - 1; i >= 0; i--) {
+    //   final e = routes[i];
+    //   if (e is PopupRoute) {
+    //     return e;
+    //   }
+    // }
+
+    for (int i = _allRoutes.length - 1; i >= 0; i--) {
+      final e = _allRoutes[i];
       if (e is PopupRoute) {
         return e;
       }
@@ -83,6 +93,11 @@ class RouteManager {
 
   /// 入栈
   void push(Route<dynamic> route) {
+    if (_allRoutes.isEmpty ||
+        _allRoutes.isNotEmpty && _allRoutes.last != route) {
+      _allRoutes.add(route);
+    }
+
     if (!filterRoute(route)) {
       debugPrint("❌push ${[route.runtimeType, route.settings.name]}");
       return;
@@ -96,6 +111,7 @@ class RouteManager {
 
   /// 出栈
   void pop(Route<dynamic> route) {
+    _allRoutes.remove(route);
     if (!filterRoute(route)) {
       return;
     }

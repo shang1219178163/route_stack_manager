@@ -6,6 +6,7 @@
 //  Copyright © 2024/9/28 shang. All rights reserved.
 //
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
 
@@ -63,9 +64,46 @@ class _PageFiveState extends State<PageFive> {
     DLog.d(RouteManager().toString());
   }
 
-  void showDialog() {
-    showAboutDialog(context: context);
+  void showDialog() async {
+    final result = await showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return Container(
+          child: Center(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              constraints: const BoxConstraints(
+                minWidth: 300,
+                maxWidth: 300,
+                minHeight: 200,
+                maxHeight: 400,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      RouteManager()
+                          .popupRoute
+                          ?.navigator
+                          ?.pop({"result99": "resultABC"});
+                    },
+                    child: const Text("showSheet"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
     DLog.d(RouteManager().toString());
+    DLog.d("result: $result");
   }
 
   void showSheet() {
