@@ -1,10 +1,11 @@
 import 'package:example/page/page_one.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
 
 void main() {
-  RouteManager().isDebug = true;
-  RouteManager().filterRoute = (route) => true;
+  RouteManager().isDebug = kDebugMode;
+  // RouteManager().filterRoute = (route) => true;
 
   runApp(const MyApp());
 }

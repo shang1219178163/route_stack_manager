@@ -1,3 +1,12 @@
+## 1.0.0
+
+* TODO: Breakthrough improvements.
+* routes - all routes.
+* pageRoutes - PageRoute type routes.
+* dialogRoutes - DialogRoute type routes.
+* sheetRoutes - ModalBottomSheetRoute type routes.
+* delete filterRoute.
+
 ## 0.1.5
 
 * TODO: fix PopupRoute lisenter.
