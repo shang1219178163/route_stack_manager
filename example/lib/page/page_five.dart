@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
 
-import '../dlog.dart';
+import '../util/dlog.dart';
 
 class PageFive extends StatefulWidget {
   const PageFive({
@@ -24,8 +24,13 @@ class PageFive extends StatefulWidget {
   State<PageFive> createState() => _PageFiveState();
 }
 
-class _PageFiveState extends State<PageFive> {
+class _PageFiveState extends State<PageFive> with RouteListenterMixin {
   final _scrollController = ScrollController();
+
+  @override
+  void onRouteListener() {
+    DLog.d("$widget initState ${[RouteManager().preRouteName, RouteManager().currentRouteName].join(" >>> ")}");
+  }
 
   @override
   void didUpdateWidget(covariant PageFive oldWidget) {
@@ -50,10 +55,9 @@ class _PageFiveState extends State<PageFive> {
         child: Column(
           children: [
             OutlinedButton(onPressed: onNext, child: const Text("next")),
-            OutlinedButton(
-                onPressed: showDialog, child: const Text("showDialog")),
-            OutlinedButton(
-                onPressed: showSheet, child: const Text("showSheet")),
+            OutlinedButton(onPressed: onDelete, child: const Text("onDelete")),
+            OutlinedButton(onPressed: showDialog, child: const Text("showDialog")),
+            OutlinedButton(onPressed: showSheet, child: const Text("showSheet")),
           ],
         ),
       ),
@@ -62,6 +66,10 @@ class _PageFiveState extends State<PageFive> {
 
   void onNext() {
     DLog.d(RouteManager().toString());
+  }
+
+  void onDelete() {
+    Navigator.of(context).removeRoute(RouteManager().routes.last);
   }
 
   void showDialog() async {
@@ -88,10 +96,7 @@ class _PageFiveState extends State<PageFive> {
                 children: [
                   OutlinedButton(
                     onPressed: () {
-                      RouteManager()
-                          .popupRoute
-                          ?.navigator
-                          ?.pop({"result99": "resultABC"});
+                      RouteManager().popupRoute?.navigator?.pop({"result99": "resultABC"});
                     },
                     child: const Text("showSheet"),
                   ),

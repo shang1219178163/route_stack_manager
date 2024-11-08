@@ -43,6 +43,7 @@ class RouteManagerObserver extends RouteObserver<PageRoute<dynamic>> {
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didRemove(route, previousRoute);
     RouteManager().pop(route);
+    RouteManager().preRoute = route;
     RouteManager().logRoutes();
   }
 }

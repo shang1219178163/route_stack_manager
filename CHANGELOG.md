@@ -1,3 +1,9 @@
+## 1.1.0
+
+* TODO: Add a route to change the listening stack.
+* support RouteListenterMixin.
+* delete ValueChanged<RouteManager>? onChanged.
+
 ## 1.0.0
 
 * TODO: Breakthrough improvements.

@@ -6,8 +6,10 @@
 //  Copyright © 2024/9/28 shang. All rights reserved.
 //
 
+import 'package:example/util/dlog.dart';
 import 'package:example/page/page_four.dart';
 import 'package:flutter/material.dart';
+import 'package:route_stack_manager/route_stack_manager.dart';
 
 class PageThree extends StatefulWidget {
   const PageThree({
@@ -21,8 +23,13 @@ class PageThree extends StatefulWidget {
   State<PageThree> createState() => _PageThreeState();
 }
 
-class _PageThreeState extends State<PageThree> {
+class _PageThreeState extends State<PageThree> with RouteListenterMixin {
   final _scrollController = ScrollController();
+
+  @override
+  void onRouteListener() {
+    DLog.d("$widget initState ${[RouteManager().preRouteName, RouteManager().currentRouteName].join(" >>> ")}");
+  }
 
   @override
   void didUpdateWidget(covariant PageThree oldWidget) {

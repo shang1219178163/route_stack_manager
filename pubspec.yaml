@@ -3,7 +3,7 @@ description: "This is a Flutter route stack information listening library. You
  can
  obtain the list of current routes, current routes, previous routes, and whether the current route is a pop-up window
 "
-version: 1.0.0
+version: 1.1.0
 homepage: https://github.com/shang1219178163/route_stack_manager
 
 environment:

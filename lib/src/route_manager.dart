@@ -18,6 +18,29 @@ class RouteManager {
   factory RouteManager() => _instance;
   static RouteManager get instance => _instance;
 
+  /// 监听列表
+  final List<VoidCallback> _listeners = [];
+
+  // 添加监听
+  void addListener(VoidCallback cb) {
+    if (_listeners.contains(cb)) {
+      return;
+    }
+    _listeners.add(cb);
+  }
+
+  // 移除监听
+  void removeListener(VoidCallback cb) {
+    _listeners.remove(cb);
+  }
+
+  // 通知所有监听器
+  void notifyListeners() {
+    for (var ltr in _listeners) {
+      ltr();
+    }
+  }
+
   /// 是否打印日志
   bool isDebug = false;
 
@@ -28,16 +51,13 @@ class RouteManager {
   List<Route<dynamic>> get routes => _routes;
 
   /// 当前 PageRoute 路由堆栈
-  List<PageRoute<dynamic>> get pageRoutes =>
-      _routes.whereType<PageRoute>().toList();
+  List<PageRoute<dynamic>> get pageRoutes => _routes.whereType<PageRoute>().toList();
 
   /// 当前 DialogRoute 路由堆栈
-  List<DialogRoute<dynamic>> get dialogRoutes =>
-      _routes.whereType<DialogRoute>().toList();
+  List<DialogRoute<dynamic>> get dialogRoutes => _routes.whereType<DialogRoute>().toList();
 
   /// 当前 ModalBottomSheetRoute 路由堆栈
-  List<ModalBottomSheetRoute<dynamic>> get sheetRoutes =>
-      _routes.whereType<ModalBottomSheetRoute>().toList();
+  List<ModalBottomSheetRoute<dynamic>> get sheetRoutes => _routes.whereType<ModalBottomSheetRoute>().toList();
 
   /// 当前路由名堆栈
   List<String?> get routeNames => routes.map((e) => e.settings.name).toList();
@@ -79,7 +99,7 @@ class RouteManager {
   //     (route) => route is PageRoute && route.settings.name != null;
 
   /// 更新回调
-  ValueChanged<RouteManager>? onChanged;
+  // ValueChanged<RouteManager>? onChanged;
 
   /// 是否存在路由堆栈中
   bool contain(String routeName) {
@@ -138,7 +158,8 @@ class RouteManager {
   }
 
   void logRoutes() {
-    onChanged?.call(this);
+    // onChanged?.call(this);
+    notifyListeners();
     if (!isDebug) {
       return;
     }
