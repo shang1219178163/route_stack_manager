@@ -6,6 +6,8 @@
 //  Copyright © 2024/9/28 shang. All rights reserved.
 //
 
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
@@ -69,21 +71,23 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
   }
 
   void onDelete() {
-    Navigator.of(context).removeRoute(RouteManager().routes.last);
+    final route = RouteManager().routes[1];
+    Navigator.of(context).removeRoute(route);
   }
 
   void showDialog() async {
     final result = await showCupertinoDialog(
       context: context,
       builder: (context) {
-        return Container(
-          child: Center(
+        return Align(
+          child: Material(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               constraints: const BoxConstraints(
                 minWidth: 300,
                 maxWidth: 300,
-                minHeight: 200,
+                minHeight: 160,
                 maxHeight: 400,
               ),
               decoration: BoxDecoration(
@@ -94,11 +98,39 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      RouteManager().popupRoute?.navigator?.pop({"result99": "resultABC"});
-                    },
-                    child: const Text("showSheet"),
+                  Text(
+                    "Title",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  Flexible(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        "这是一条提示信息的详情内容显示;" * 3,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            RouteManager().popupRoute?.navigator?.pop({"ok": false});
+                          },
+                          child: const Text("cancel"),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            RouteManager().popupRoute?.navigator?.pop({"ok": true});
+                          },
+                          child: const Text("confirm"),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -109,6 +141,12 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
     );
     DLog.d(RouteManager().toString());
     DLog.d("result: $result");
+    final isConfirm = result is Bool && result == true || result is Map && result["ok"] == true;
+    if (!isConfirm) {
+      return;
+    }
+    RouteManager().pageRoutes.lastOrNull?.navigator?.pop({"aa": "aa"});
+    RouteManager().pageRoutes.lastOrNull?.navigator?.pop({"bb": "bb"});
   }
 
   Future<void> showSheet() async {
@@ -117,7 +155,7 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
       builder: (context) {
         return Container(
           height: 500,
-          color: Colors.yellow,
+          color: Colors.green,
         );
       },
     );

@@ -36,6 +36,12 @@ class MyApp extends StatelessWidget {
         backgroundColor: primary,
         foregroundColor: Colors.white,
       ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+          splashFactory: NoSplash.splashFactory,
+          side: MaterialStateProperty.all(const BorderSide(color: primary, width: 1)),
+        ),
+      ),
     );
   }
 }
