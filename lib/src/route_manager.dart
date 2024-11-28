@@ -93,13 +93,6 @@ class RouteManager {
   /// 路由堆栈包含 ModalBottomSheetRoute 类型
   bool get isSheetOpen => popupRoute is ModalBottomSheetRoute;
 
-  // /// 进出堆栈过滤条件(默认仅支持PageRoute, 过滤弹窗)
-  // bool Function(Route<dynamic> route) filterRoute =
-  //     (route) => route is PageRoute && route.settings.name != null;
-
-  /// 更新回调
-  // ValueChanged<RouteManager>? onChanged;
-
   /// 是否存在路由堆栈中
   bool contain(String routeName) {
     return routeNames.contains(routeName);
@@ -157,7 +150,6 @@ class RouteManager {
   }
 
   void logRoutes() {
-    // onChanged?.call(this);
     notifyListeners();
     if (!isDebug) {
       return;
