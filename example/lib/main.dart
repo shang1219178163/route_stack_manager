@@ -42,6 +42,13 @@ class MyApp extends StatelessWidget {
           side: MaterialStateProperty.all(const BorderSide(color: primary, width: 1)),
         ),
       ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          splashFactory: NoSplash.splashFactory,
+          backgroundColor: MaterialStateProperty.all(primary),
+          foregroundColor: MaterialStateProperty.all(Colors.white),
+        ),
+      ),
     );
   }
 }

@@ -44,31 +44,31 @@ class RouteManager {
   bool isDebug = false;
 
   /// 所有路由堆栈
-  final List<Route<dynamic>> _routes = [];
+  final List<Route<Object?>> _routes = [];
 
   /// 当前路由堆栈
-  List<Route<dynamic>> get routes => _routes;
+  List<Route<Object?>> get routes => _routes;
 
   /// 当前 PageRoute 路由堆栈
-  List<PageRoute<dynamic>> get pageRoutes => _routes.whereType<PageRoute>().toList();
+  List<PageRoute<Object?>> get pageRoutes => _routes.whereType<PageRoute>().toList();
 
   /// 当前 DialogRoute 路由堆栈
-  List<DialogRoute<dynamic>> get dialogRoutes => _routes.whereType<DialogRoute>().toList();
+  List<RawDialogRoute<Object?>> get dialogRoutes => _routes.whereType<RawDialogRoute>().toList();
 
   /// 当前 ModalBottomSheetRoute 路由堆栈
-  List<ModalBottomSheetRoute<dynamic>> get sheetRoutes => _routes.whereType<ModalBottomSheetRoute>().toList();
+  List<ModalBottomSheetRoute<Object?>> get sheetRoutes => _routes.whereType<ModalBottomSheetRoute>().toList();
 
   /// 当前路由名堆栈
   List<String?> get routeNames => routes.map((e) => e.settings.name).toList();
 
   /// 之前路由
-  Route<dynamic>? preRoute;
+  Route<Object?>? preRoute;
 
   /// 之前路由 name
   String? get preRouteName => preRoute?.settings.name;
 
   /// 当前路由
-  Route<dynamic>? get currentRoute => routes.isEmpty ? null : routes.last;
+  Route<Object?>? get currentRoute => routes.isEmpty ? null : routes.last;
 
   /// 当前路由 name
   String? get currentRouteName => currentRoute?.settings.name;
@@ -131,14 +131,17 @@ class RouteManager {
     if (sheetRoutes.isNotEmpty) {
       data['sheetRoutes'] = sheetRoutes.map((e) => e.toString()).toList();
     }
+    if (dialogRoutes.isNotEmpty) {
+      data['dialogRoutes'] = dialogRoutes.map((e) => e.toString()).toList();
+    }
     data['routeNames'] = routeNames;
+    data['preRoute'] = preRoute.toString();
     data['preRouteName'] = preRouteName;
     data['currentRouteName'] = currentRouteName;
     data['popupRoute'] = popupRoute.toString();
     data['isPopupOpen'] = isPopupOpen;
     data['isDialogOpen'] = isDialogOpen;
     data['isSheetOpen'] = isSheetOpen;
-
     return data;
   }
 

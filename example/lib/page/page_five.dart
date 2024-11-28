@@ -58,8 +58,8 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
           children: [
             OutlinedButton(onPressed: onNext, child: const Text("next")),
             OutlinedButton(onPressed: onDelete, child: const Text("onDelete")),
-            OutlinedButton(onPressed: showDialog, child: const Text("showDialog")),
-            OutlinedButton(onPressed: showSheet, child: const Text("showSheet")),
+            OutlinedButton(onPressed: onShowDialog, child: const Text("showDialog")),
+            OutlinedButton(onPressed: onShowSheet, child: const Text("showSheet")),
           ],
         ),
       ),
@@ -75,71 +75,22 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
     Navigator.of(context).removeRoute(route);
   }
 
-  void showDialog() async {
+  Future<void> onShowDialog() async {
     final result = await showCupertinoDialog(
       context: context,
+      routeSettings: const RouteSettings(name: "onShowDialog", arguments: {"a": "a"}),
       builder: (context) {
-        return Align(
-          child: Material(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              constraints: const BoxConstraints(
-                minWidth: 300,
-                maxWidth: 300,
-                minHeight: 160,
-                maxHeight: 400,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Title",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  Flexible(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Text(
-                        "这是一条提示信息的详情内容显示;" * 3,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () {
-                            RouteManager().popupRoute?.navigator?.pop({"ok": false});
-                          },
-                          child: const Text("cancel"),
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () {
-                            RouteManager().popupRoute?.navigator?.pop({"ok": true});
-                          },
-                          child: const Text("confirm"),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+        return buildAlertContent(
+          onCancel: () {
+            RouteManager().popupRoute?.navigator?.pop({"ok": false});
+          },
+          onConfirm: () {
+            RouteManager().popupRoute?.navigator?.pop({"ok": true});
+          },
         );
       },
     );
-    DLog.d(RouteManager().toString());
+    // DLog.d(RouteManager().toString());
     DLog.d("result: $result");
     final isConfirm = result is Bool && result == true || result is Map && result["ok"] == true;
     if (!isConfirm) {
@@ -149,10 +100,23 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
     RouteManager().pageRoutes.lastOrNull?.navigator?.pop({"bb": "bb"});
   }
 
-  Future<void> showSheet() async {
+  Future<void> onShowSheet() async {
     showModalBottomSheet(
       context: context,
+      routeSettings: const RouteSettings(name: "onShowSheet", arguments: {"b": "b"}),
       builder: (context) {
+        return buildAlertContent(
+          onCancel: () {
+            RouteManager().popupRoute?.navigator?.pop({"ok": false});
+          },
+          onConfirm: () async {
+            await onShowDialog();
+            DLog.d([
+              RouteManager().popupRoute,
+              RouteManager().popupRoute?.settings,
+            ].asMap());
+          },
+        );
         return Container(
           height: 500,
           color: Colors.green,
@@ -160,5 +124,68 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
       },
     );
     DLog.d(RouteManager().toString());
+  }
+
+  Widget buildAlertContent({
+    VoidCallback? onCancel,
+    VoidCallback? onConfirm,
+  }) {
+    return Align(
+      child: Material(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          constraints: const BoxConstraints(
+            minWidth: 300,
+            maxWidth: 300,
+            minHeight: 160,
+            maxHeight: 400,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Title",
+                style: TextStyle(fontSize: 16),
+              ),
+              Flexible(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    "这是一条提示信息的详情内容显示;" * 3,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+                      onPressed: onCancel,
+                      child: const Text("cancel"),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: onConfirm,
+                      child: const Text("confirm"),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
