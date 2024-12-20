@@ -131,9 +131,6 @@ class RouteManager {
     if (sheetRoutes.isNotEmpty) {
       data['sheetRoutes'] = sheetRoutes.map((e) => e.toString()).toList();
     }
-    if (dialogRoutes.isNotEmpty) {
-      data['dialogRoutes'] = dialogRoutes.map((e) => e.toString()).toList();
-    }
     data['routeNames'] = routeNames;
     data['preRoute'] = preRoute.toString();
     data['preRouteName'] = preRouteName;
