@@ -1,4 +1,3 @@
-import 'package:example/util/dlog.dart';
 import 'package:example/page/page_one.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

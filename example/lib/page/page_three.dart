@@ -62,7 +62,7 @@ class _PageThreeState extends State<PageThree> with RouteListenterMixin {
 
   void onNext() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => PageFour(),
+      builder: (context) => const PageFour(),
       settings: const RouteSettings(
         name: "/PageFour",
       ),

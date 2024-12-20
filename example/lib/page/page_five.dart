@@ -132,16 +132,16 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
   }) {
     return Align(
       child: Material(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           constraints: const BoxConstraints(
             minWidth: 300,
             maxWidth: 300,
             minHeight: 160,
             maxHeight: 400,
           ),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
@@ -149,16 +149,16 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 "Title",
                 style: TextStyle(fontSize: 16),
               ),
               Flexible(
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
                     "这是一条提示信息的详情内容显示;" * 3,
-                    style: TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14),
                   ),
                 ),
               ),
