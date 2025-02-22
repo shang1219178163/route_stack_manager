@@ -8,6 +8,7 @@
 
 import 'package:example/util/dlog.dart';
 import 'package:example/page/page_two.dart';
+import 'package:example/view/info_button.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
 
@@ -24,11 +25,23 @@ class PageOne extends StatefulWidget {
 }
 
 class _PageOneState extends State<PageOne> with RouteListenterMixin {
-  final _scrollController = ScrollController();
+  final scrollController = ScrollController();
 
   @override
-  void onRouteListener() {
-    DLog.d("$widget initState ${[RouteManager().preRouteName, RouteManager().currentRouteName].join(" >>> ")}");
+  void initState() {
+    super.initState();
+
+    RouteManager().isDebug = false;
+  }
+
+  @override
+  void onRouteBeforeListener({Route? from, Route? to}) {
+    DLog.d("$widget onRouteBeforeListener ${[from, to].map((e) => e?.settings.name).join(" >> ")}");
+  }
+
+  @override
+  void onRouteListener({Route? from, Route? to}) {
+    DLog.d("$widget onRouteListener ${[RouteManager().preRouteName, RouteManager().currentRouteName].join(" >> ")}");
   }
 
   @override
@@ -36,6 +49,7 @@ class _PageOneState extends State<PageOne> with RouteListenterMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text("$widget"),
+        actions: const [InfoButton()],
       ),
       body: buildBody(),
     );
@@ -43,10 +57,11 @@ class _PageOneState extends State<PageOne> with RouteListenterMixin {
 
   Widget buildBody() {
     return Scrollbar(
-      controller: _scrollController,
+      controller: scrollController,
       child: SingleChildScrollView(
-        controller: _scrollController,
+        controller: scrollController,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             OutlinedButton(onPressed: onNext, child: const Text("next")),
           ],

@@ -13,6 +13,7 @@ import '../route_stack_manager.dart';
 mixin RouteListenterMixin<T extends StatefulWidget> on State<T> {
   @override
   void dispose() {
+    RouteManager().removeRouteBeforeListener(onRouteBeforeListener);
     RouteManager().removeListener(onRouteListener);
     super.dispose();
   }
@@ -21,11 +22,17 @@ mixin RouteListenterMixin<T extends StatefulWidget> on State<T> {
   void initState() {
     super.initState();
 
+    RouteManager().addRouteBeforeListener(onRouteBeforeListener);
     RouteManager().addListener(onRouteListener);
   }
 
-  void onRouteListener() {
+  void onRouteListener({Route? from, Route? to}) {
     // DLog.d("$widget initState ${[RouteManager().preRouteName, RouteManager().currentRouteName]}");
     throw UnimplementedError("❌$this Not implemented onRouteListener");
+  }
+
+  void onRouteBeforeListener({Route? from, Route? to}) {
+    // DLog.d("$widget initState ${[RouteManager().preRouteName, RouteManager().currentRouteName]}");
+    throw UnimplementedError("❌$this Not implemented onRouteBeforeListener");
   }
 }

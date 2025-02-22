@@ -8,6 +8,8 @@
 
 import 'dart:ffi';
 
+import 'package:example/page/page_unknow.dart';
+import 'package:example/view/info_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
@@ -27,10 +29,24 @@ class PageFive extends StatefulWidget {
 }
 
 class _PageFiveState extends State<PageFive> with RouteListenterMixin {
-  final _scrollController = ScrollController();
+  final scrollController = ScrollController();
+
+  /// 数组
+  late final items = [
+    (title: "next", event: onNext, desc: "下一页"),
+    (title: "onDelete", event: onDelete, desc: "删除PageOne"),
+    (title: "onReplace", event: onReplace, desc: "用 PageUnknow 取代当前页面"),
+    (title: "showDialog", event: onShowDialog, desc: "弹窗对路由的影响"),
+    (title: "showSheet", event: onShowSheet, desc: "底部弹窗对路由的影响"),
+  ];
 
   @override
-  void onRouteListener() {
+  void onRouteBeforeListener({Route? from, Route? to}) {
+    DLog.d("$widget onRouteBeforeListener ${[from, to].map((e) => e?.settings.name).join(" >> ")}");
+  }
+
+  @override
+  void onRouteListener({Route? from, Route? to}) {
     DLog.d("$widget initState ${[RouteManager().preRouteName, RouteManager().currentRouteName].join(" >>> ")}");
   }
 
@@ -44,6 +60,7 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text("$widget"),
+        actions: const [InfoButton()],
       ),
       body: buildBody(),
     );
@@ -51,15 +68,20 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
 
   Widget buildBody() {
     return Scrollbar(
-      controller: _scrollController,
+      controller: scrollController,
       child: SingleChildScrollView(
-        controller: _scrollController,
+        controller: scrollController,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            OutlinedButton(onPressed: onNext, child: const Text("next")),
-            OutlinedButton(onPressed: onDelete, child: const Text("onDelete")),
-            OutlinedButton(onPressed: onShowDialog, child: const Text("showDialog")),
-            OutlinedButton(onPressed: onShowSheet, child: const Text("showSheet")),
+            Wrap(
+              spacing: 8,
+              children: [
+                ...items.map((e) {
+                  return OutlinedButton(onPressed: e.event, child: Text(e.title));
+                }),
+              ],
+            ),
           ],
         ),
       ),
@@ -71,8 +93,22 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
   }
 
   void onDelete() {
+    DLog.d("onDelete before: ${RouteManager().routeNames}");
+
     final route = RouteManager().routes[1];
     Navigator.of(context).removeRoute(route);
+
+    DLog.d("onDelete: ${RouteManager().routeNames}");
+  }
+
+  void onReplace() {
+    DLog.d("onReplace before: ${RouteManager().routeNames}");
+
+    // Navigator.of(context).replace(oldRoute: route1, newRoute: route2);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => PageUnknow(), settings: RouteSettings(name: "/pageUnknow")),
+    );
+    DLog.d("onReplace: ${RouteManager().routeNames}");
   }
 
   Future<void> onShowDialog() async {

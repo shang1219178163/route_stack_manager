@@ -17,11 +17,34 @@ class RouteManager {
   factory RouteManager() => _instance;
   static RouteManager get instance => _instance;
 
-  /// 监听列表
-  final List<VoidCallback> _listeners = [];
+  /// 监听(跳转前)列表
+  final List<void Function({Route? from, Route? to})> _beforelisteners = [];
 
   // 添加监听
-  void addListener(VoidCallback cb) {
+  void addRouteBeforeListener(void Function({Route? from, Route? to}) cb) {
+    if (_beforelisteners.contains(cb)) {
+      return;
+    }
+    _beforelisteners.add(cb);
+  }
+
+  // 移除监听
+  void removeRouteBeforeListener(void Function({Route? from, Route? to}) cb) {
+    _beforelisteners.remove(cb);
+  }
+
+  /// 通知所有监听器
+  void notifyRouteBeforeListeners({required Route? from, required Route? to}) {
+    for (var ltr in _beforelisteners) {
+      ltr(from: from, to: to);
+    }
+  }
+
+  /// 监听列表
+  final List<void Function({Route? from, Route? to})> _listeners = [];
+
+  // 添加监听
+  void addListener(void Function({Route? from, Route? to}) cb) {
     if (_listeners.contains(cb)) {
       return;
     }
@@ -29,14 +52,14 @@ class RouteManager {
   }
 
   // 移除监听
-  void removeListener(VoidCallback cb) {
+  void removeListener(void Function({Route? from, Route? to}) cb) {
     _listeners.remove(cb);
   }
 
-  // 通知所有监听器
-  void notifyListeners() {
+  /// 通知所有监听器
+  void notifyListeners({required Route? from, required Route? to}) {
     for (var ltr in _listeners) {
-      ltr();
+      ltr(from: from, to: to);
     }
   }
 
@@ -150,11 +173,14 @@ class RouteManager {
   }
 
   void logRoutes() {
-    notifyListeners();
     if (!isDebug) {
       return;
     }
 
     developer.log(toString());
   }
+}
+
+abstract mixin class RouteBeforeMixin {
+  void routerBeforeChaned({Route? from, Route? to}) {}
 }

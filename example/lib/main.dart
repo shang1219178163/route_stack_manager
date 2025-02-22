@@ -1,12 +1,11 @@
 import 'package:example/page/page_one.dart';
+import 'package:example/view/info_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
 
 void main() {
   RouteManager().isDebug = kDebugMode;
-  // RouteManager().filterRoute = (route) => true;
-
   runApp(const MyApp());
 }
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         RouteManagerObserver(),
       ],
       theme: buildTheme(),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Home Page'),
     );
   }
 
@@ -62,17 +61,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: const [InfoButton()],
       ),
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          OutlinedButton(onPressed: onNext, child: const Text("next")),
-        ],
+      body: buildBody(),
+    );
+  }
+
+  Widget buildBody() {
+    return Scrollbar(
+      controller: scrollController,
+      child: SingleChildScrollView(
+        controller: scrollController,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            OutlinedButton(onPressed: onNext, child: const Text("next")),
+          ],
+        ),
       ),
     );
   }

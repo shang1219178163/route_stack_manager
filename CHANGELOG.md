@@ -1,3 +1,9 @@
+## 1.2.0
+
+* TODO: add onRouteBeforeListener.
+* onRouteListener change.
+* add some demo codes.
+* 
 ## 1.1.1
 
 * TODO: Modify the Route generic type from dynamic to Object? .
