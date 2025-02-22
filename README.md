@@ -17,9 +17,32 @@ flutter Route stack listeners.
 in PageFive:
 
 ```dart
+class _PageFiveState extends State<PageFive> with RouteListenterMixin {
+
+  @override
+  void onRouteBeforeListener({Route? from, Route? to}) {
+    DLog.d("$widget onRouteBeforeListener ${[from, to]
+        .map((e) => e?.settings.name)
+        .join(" >> ")}");
+  }
+
+  @override
+  void onRouteListener({Route? from, Route? to}) {
+    DLog.d("$widget initState ${[
+      RouteManager().preRouteName,
+      RouteManager().currentRouteName
+    ].join(" >>> ")}");
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    //...
+  }
+
   void onNext() {
     DLog.d(RouteManager().toString());
   }
+}
 ```
 
     [log] DLog 2024-09-28 10:46:16.173479 RouteManager: {
