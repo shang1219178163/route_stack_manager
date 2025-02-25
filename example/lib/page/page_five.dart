@@ -36,6 +36,7 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
     (title: "next", event: onNext, desc: "下一页"),
     (title: "onDelete", event: onDelete, desc: "删除PageOne"),
     (title: "onReplace", event: onReplace, desc: "用 PageUnknow 取代当前页面"),
+    (title: "onPopUntil", event: onPopUntil, desc: "知道退出到目标页面"),
     (title: "showDialog", event: onShowDialog, desc: "弹窗对路由的影响"),
     (title: "showSheet", event: onShowSheet, desc: "底部弹窗对路由的影响"),
   ];
@@ -108,6 +109,11 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => PageUnknow(), settings: RouteSettings(name: "/pageUnknow")),
     );
+    DLog.d("onReplace: ${RouteManager().routeNames}");
+  }
+
+  void onPopUntil() {
+    Navigator.of(context).popUntil(ModalRoute.withName("/PageTwo"), {"$widget": "999"});
     DLog.d("onReplace: ${RouteManager().routeNames}");
   }
 

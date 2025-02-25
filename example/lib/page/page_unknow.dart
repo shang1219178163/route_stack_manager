@@ -24,6 +24,11 @@ class PageUnknow extends StatefulWidget {
 class _PageUnknowState extends State<PageUnknow> {
   final scrollController = ScrollController();
 
+  /// 数组
+  late final items = [
+    (title: "onPopRoot", event: onPopRoot, desc: "下一页"),
+  ];
+
   @override
   void didUpdateWidget(covariant PageUnknow oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -48,7 +53,14 @@ class _PageUnknowState extends State<PageUnknow> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            OutlinedButton(onPressed: onPopRoot, child: const Text("onPopRoot")),
+            Wrap(
+              spacing: 8,
+              children: [
+                ...items.map((e) {
+                  return OutlinedButton(onPressed: e.event, child: Text(e.title));
+                }),
+              ],
+            ),
           ],
         ),
       ),

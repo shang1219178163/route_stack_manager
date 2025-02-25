@@ -70,8 +70,8 @@ class _PageOneState extends State<PageOne> with RouteListenterMixin {
     );
   }
 
-  void onNext() {
-    Navigator.of(context).push(MaterialPageRoute(
+  Future<void> onNext() async {
+    final result = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const PageTwo(),
       settings: const RouteSettings(
         name: "/PageTwo",

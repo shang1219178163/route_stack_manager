@@ -1,4 +1,5 @@
 import 'package:example/page/page_one.dart';
+import 'package:example/util/dlog.dart';
 import 'package:example/view/info_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -89,8 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void onNext() {
-    Navigator.of(context).push(
+  Future<void> onNext() async {
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const PageOne(),
         settings: const RouteSettings(
@@ -98,5 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+    DLog.d("$widget result: $result");
   }
 }
