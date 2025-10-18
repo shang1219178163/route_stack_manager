@@ -4,7 +4,7 @@ flutter 路由堆栈监听.
 flutter Route stack listeners.
 
 
-## 1、example：
+## 1、Use：
 
 ```dart
   navigatorObservers: [
@@ -12,7 +12,7 @@ flutter Route stack listeners.
   ],
 ```
 
-## 2、log：
+## 2、Log：
 
 in PageFive:
 
@@ -65,4 +65,54 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
       ],
       "preRouteName": "/PageFour",
       "current": "/PageFive"
+    }
+    
+  
+  ## 3、RouteManager API
+    
+    class RouteManager {
+      static final RouteManager _instance = RouteManager._();
+      RouteManager._();
+      factory RouteManager() => _instance;
+      static RouteManager get instance => _instance;
+    
+      bool isDebug = false;
+    
+      void addListener(void Function({Route? from, Route? to}) cb);
+    
+      void removeListener(void Function({Route? from, Route? to}) cb);
+    
+
+      /// all Route
+      List<Route<Object?>> get routes;
+    
+      List<PageRoute<Object?>> get pageRoutes;
+    
+      List<RawDialogRoute<Object?>> get dialogRoutes;
+    
+      List<ModalBottomSheetRoute<Object?>> get sheetRoutes;
+    
+      List<String?> get routeNames;
+    
+      Route<Object?>? get preRoute;
+    
+      String? get preRouteName;
+    
+      Route<Object?>? get currentRoute;
+    
+      String? get currentRouteName;
+    
+      PopupRoute? get popupRoute;
+    
+      bool get isPopupOpen;
+    
+      bool get isDialogOpen;
+    
+      bool get isSheetOpen;
+    
+      bool contain(String routeName);
+    
+      Object? getArguments(String routeName);
+    
+      ......  
     }

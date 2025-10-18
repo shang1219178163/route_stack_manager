@@ -17,6 +17,9 @@ class RouteManager {
   factory RouteManager() => _instance;
   static RouteManager get instance => _instance;
 
+  /// 是否打印日志
+  bool isDebug = false;
+
   /// 监听(跳转前)列表
   final List<void Function({Route? from, Route? to})> _beforelisteners = [];
 
@@ -63,9 +66,6 @@ class RouteManager {
     }
   }
 
-  /// 是否打印日志
-  bool isDebug = false;
-
   /// 所有路由堆栈
   final List<Route<Object?>> _routes = [];
 
@@ -85,7 +85,10 @@ class RouteManager {
   List<String?> get routeNames => routes.map((e) => e.settings.name).toList();
 
   /// 之前路由
-  Route<Object?>? preRoute;
+  Route<Object?>? get preRoute => _preRoute;
+
+  /// 之前路由
+  Route<Object?>? _preRoute;
 
   /// 之前路由 name
   String? get preRouteName => preRoute?.settings.name;
@@ -181,6 +184,58 @@ class RouteManager {
   }
 }
 
-abstract mixin class RouteBeforeMixin {
-  void routerBeforeChaned({Route? from, Route? to}) {}
+/// 堆栈管理器路由监听器
+class RouteManagerObserver extends RouteObserver<PageRoute<dynamic>> {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    RouteManager()._preRoute = previousRoute;
+    RouteManager().notifyRouteBeforeListeners(from: previousRoute, to: route);
+
+    super.didPush(route, previousRoute);
+    RouteManager().push(route);
+
+    RouteManager().notifyListeners(from: previousRoute, to: route);
+    RouteManager().logRoutes();
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    RouteManager()._preRoute = route;
+    RouteManager().notifyRouteBeforeListeners(from: route, to: previousRoute);
+
+    super.didPop(route, previousRoute);
+    RouteManager().pop(route);
+
+    RouteManager().notifyListeners(from: previousRoute, to: route);
+    RouteManager().logRoutes();
+  }
+
+  @override
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+    RouteManager()._preRoute = oldRoute;
+    RouteManager().notifyRouteBeforeListeners(from: oldRoute, to: newRoute);
+
+    super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
+    if (oldRoute != null) RouteManager().pop(oldRoute);
+    if (newRoute != null) RouteManager().push(newRoute);
+
+    RouteManager().notifyListeners(from: oldRoute, to: newRoute);
+    RouteManager().logRoutes();
+  }
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    RouteManager()._preRoute = route;
+    RouteManager().notifyRouteBeforeListeners(from: previousRoute, to: route);
+
+    super.didRemove(route, previousRoute);
+    RouteManager().pop(route);
+
+    RouteManager().notifyListeners(from: previousRoute, to: route);
+    RouteManager().logRoutes();
+  }
 }
+
+// abstract mixin class RouteBeforeMixin {
+//   void routerBeforeChaned({Route? from, Route? to}) {}
+// }
