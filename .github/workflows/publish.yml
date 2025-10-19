@@ -13,8 +13,8 @@ jobs:
 
       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
 
-      - name: Format code
-        run: dart format --fix .
+      - name: dart code fix
+        run: dart fix --apply
 
       - name: Dry run publish
         run: flutter pub publish --dry-run
