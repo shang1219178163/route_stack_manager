@@ -3,7 +3,7 @@ name: Publish to Pub.dev
 on:
   push:
     tags:
-      - 'v*.*.*' # 当推送版本标签时触发，如 v1.0.0
+#      - 'v*.*.*' # 当推送版本标签时触发，如 v1.0.0
 
 jobs:
   publish:
