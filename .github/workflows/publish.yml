@@ -20,13 +20,22 @@ jobs:
       - name: Analyze project source
         run: dart analyze
 
+      - name: Format code
+        run: dart format --fix .
+
+      - name: Check Publish Warnings
+        run: dart pub publish --dry-run
+
       # 发布插件
-      - name: Dart and Flutter Package Publisher
-        uses: k-paxian/dart-package-publisher@v1.2
+      - name: Publish
+        uses: k-paxian/dart-package-publisher@v1.5.1
         with:
           credentialJson: ${{ secrets.CREDENTIAL_JSON }}
+          skip_test: false
+          dry_run: true
           # 设置发布插件需要的 Token
 #          id-token: write # Required for authentication using OIDC
 #          accessToken: ${{ secrets.ACCESS_TOKEN }}
 #          refreshToken: ${{ secrets.REFRESH_TOKEN }}
+
 
