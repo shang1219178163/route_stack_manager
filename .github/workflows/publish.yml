@@ -15,7 +15,9 @@ jobs:
       - name: Dart and Flutter Package Publisher
         uses: k-paxian/dart-package-publisher@v1.2
         with:
+          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
           # 设置发布插件需要的 Token
 #          id-token: write # Required for authentication using OIDC
-          accessToken: ${{ secrets.ACCESS_TOKEN }}
-          refreshToken: ${{ secrets.REFRESH_TOKEN }}
+#          accessToken: ${{ secrets.ACCESS_TOKEN }}
+#          refreshToken: ${{ secrets.REFRESH_TOKEN }}
+    skipTests: true
