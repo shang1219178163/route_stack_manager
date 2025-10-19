@@ -6,8 +6,6 @@
 //  Copyright © 2024/9/28 shang. All rights reserved.
 //
 
-import 'dart:ffi';
-
 import 'package:example/page/page_unknow.dart';
 import 'package:example/view/info_button.dart';
 import 'package:flutter/cupertino.dart';
