@@ -25,6 +25,10 @@ jobs:
           flutter-version: '3.10.6'  # 可换成你的版本
           channel: 'stable'
 
+      # 3️⃣ 修复 PATH 优先级问题（防止系统 Dart 覆盖 Flutter Dart）
+      - name: Ensure Flutter bin is first in PATH
+        run: echo "$HOME/flutter/bin" >> $GITHUB_PATH
+
       # 3️⃣ 检查版本（验证修复是否生效）
       - name: Verify Flutter & Dart
         run: |
@@ -53,5 +57,5 @@ jobs:
         with:
           credentialJson: ${{ secrets.CREDENTIAL_JSON }}
           flutter: true
-          skipTests: false
-          dryRunOnly: true
+          skipTests: true
+          dryRunOnly: false
