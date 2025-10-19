@@ -1,20 +1,44 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
 name: Publish to Pub.dev
 
 on:
   push:
-    tags:
-#      - 'v*.*.*' # 当推送版本标签时触发，如 v1.0.0
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      # 2️⃣ 安装 Flutter SDK
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.6'  # 可换成你的版本
+          channel: 'stable'
 
-      - name: dart code fix
-        run: dart fix --apply
+      # 3️⃣ 修复 PATH 优先级问题（防止系统 Dart 覆盖 Flutter Dart）
+      - name: Ensure Flutter bin is first in PATH
+        run: echo "$HOME/flutter/bin" >> $GITHUB_PATH
+
+      # 3️⃣ 检查版本（验证修复是否生效）
+      - name: Verify Flutter & Dart
+        run: |
+          which flutter
+          which dart
+          flutter --version
+          dart --version
+
+      - name: Install dependencies
+        run: flutter pub get
 
       - name: Dry run publish
         run: flutter pub publish --dry-run
@@ -24,7 +48,6 @@ jobs:
         uses: k-paxian/dart-package-publisher@v1.5.1
         with:
           credentialJson: ${{ secrets.CREDENTIAL_JSON }}
-          skip_test: false
-          dry_run: true
-
-
+          flutter: true
+          skipTests: true
+          dryRunOnly: false
