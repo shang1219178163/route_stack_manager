@@ -1,0 +1,21 @@
+name: Publish to Pub.dev
+
+on:
+  push:
+    tags:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取仓库代码
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      # 发布插件
+      - name: Dart and Flutter Package Publisher
+        uses: k-paxian/dart-package-publisher@v1.2
+        with:
+          # 设置发布插件需要的 Token
+#          id-token: write # Required for authentication using OIDC
+          accessToken: ${{ secrets.ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.REFRESH_TOKEN }}
