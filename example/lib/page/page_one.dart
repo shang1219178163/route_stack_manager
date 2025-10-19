@@ -77,5 +77,6 @@ class _PageOneState extends State<PageOne> with RouteListenterMixin {
         name: "/PageTwo",
       ),
     ));
+    DLog.d(result);
   }
 }

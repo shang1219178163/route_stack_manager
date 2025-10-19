@@ -134,7 +134,7 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
     );
     // DLog.d(RouteManager().toString());
     DLog.d("result: $result");
-    final isConfirm = result is Bool && result == true || result is Map && result["ok"] == true;
+    final isConfirm = result || (result is Map && result["ok"]) == true;
     if (!isConfirm) {
       return;
     }
@@ -158,10 +158,6 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
               RouteManager().popupRoute?.settings,
             ].asMap());
           },
-        );
-        return Container(
-          height: 500,
-          color: Colors.green,
         );
       },
     );
