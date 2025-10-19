@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart
+name: Dart test
 
 on:
   push:
@@ -51,11 +51,11 @@ jobs:
       - name: Dry run publish
         run: flutter pub publish --dry-run
 
-      # 发布插件
-      - name: Publish package to pub.dev
-        uses: k-paxian/dart-package-publisher@v1.5.1
-        with:
-          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
-          flutter: true
-          skipTests: true
-          dryRunOnly: false
+#      # 发布插件
+#      - name: Publish package to pub.dev
+#        uses: k-paxian/dart-package-publisher@v1.5.1
+#        with:
+#          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
+#          flutter: true
+#          skipTests: true
+#          dryRunOnly: false
