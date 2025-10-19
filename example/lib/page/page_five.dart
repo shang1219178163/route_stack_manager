@@ -107,7 +107,7 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
 
     // Navigator.of(context).replace(oldRoute: route1, newRoute: route2);
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => PageUnknow(), settings: RouteSettings(name: "/pageUnknow")),
+      MaterialPageRoute(builder: (context) => const PageUnknow(), settings: const RouteSettings(name: "/pageUnknow")),
     );
     DLog.d("onReplace: ${RouteManager().routeNames}");
   }

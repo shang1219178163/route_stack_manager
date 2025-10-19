@@ -44,7 +44,7 @@ class _InfoButtonState extends State<InfoButton> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      routeSettings: RouteSettings(name: "$widget - showModalBottomSheet", arguments: {"b": "b"}),
+      routeSettings: RouteSettings(name: "$widget - showModalBottomSheet", arguments: const {"b": "b"}),
       builder: (context) {
         return FractionallySizedBox(
           heightFactor: 0.8,
@@ -77,7 +77,7 @@ class _InfoButtonState extends State<InfoButton> {
       height: 50,
       child: NavigationToolbar(
         leading: CupertinoButton(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           onPressed: () {
             onCancel?.call();
             Navigator.of(context).pop();
@@ -102,7 +102,7 @@ class _InfoButtonState extends State<InfoButton> {
           textAlign: TextAlign.center,
         ),
         trailing: CupertinoButton(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           onPressed: () {
             onConfirm?.call();
             Navigator.of(context).pop();
