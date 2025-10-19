@@ -25,6 +25,7 @@ jobs:
 
       # 发布插件
       - name: Publish
+        run: flutter pub publish --server=https://pub.dartlang.org
         uses: k-paxian/dart-package-publisher@v1.5.1
         with:
           credentialJson: ${{ secrets.CREDENTIAL_JSON }}
