@@ -24,7 +24,14 @@ jobs:
         with:
           flutter-version: '3.10.6'  # 可换成你的版本
           channel: 'stable'
-          
+
+      # 3️⃣ 检查版本（验证修复是否生效）
+      - name: Verify Flutter & Dart
+        run: |
+          which flutter
+          which dart
+          flutter --version
+          dart --version
 
       - name: Install dependencies
         run: flutter pub get
@@ -45,5 +52,6 @@ jobs:
         uses: k-paxian/dart-package-publisher@v1.5.1
         with:
           credentialJson: ${{ secrets.CREDENTIAL_JSON }}
-          skip_test: false
-          dry_run: true
+          flutter: true
+          skipTests: false
+          dryRunOnly: true
