@@ -29,12 +29,12 @@ class _PageTwoState extends State<PageTwo> with RouteListenterMixin {
 
   @override
   void onRouteBeforeListener({Route? from, Route? to}) {
-    DLog.d([from?.settings.name, to?.settings.name].join(" >>> "));
+    // DLog.d([from?.settings.name, to?.settings.name].join(" >>> "));
   }
 
   @override
   void onRouteListener({Route? from, Route? to}) {
-    DLog.d([from?.settings.name, to?.settings.name].join(" >>> "));
+    // DLog.d([from?.settings.name, to?.settings.name].join(" >>> "));
   }
 
   @override

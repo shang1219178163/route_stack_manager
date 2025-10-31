@@ -8,6 +8,7 @@
 
 import 'package:example/view/info_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
 
 import '../util/AppNavigator.dart';
@@ -44,12 +45,15 @@ class _PageThreeState extends State<PageThree> with RouteListenterMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("$widget"),
-        actions: const [InfoButton()],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("$widget"),
+          actions: const [InfoButton()],
+        ),
+        body: buildBody(),
       ),
-      body: buildBody(),
     );
   }
 
@@ -61,11 +65,17 @@ class _PageThreeState extends State<PageThree> with RouteListenterMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // SizedBox(height: 100),
+            // IconButton(onPressed: onBack, icon: Icon(Icons.arrow_back_ios_new)),
             OutlinedButton(onPressed: onNext, child: const Text("next")),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> onBack() async {
+    final result = AppNavigator.back();
   }
 
   Future<void> onNext() async {

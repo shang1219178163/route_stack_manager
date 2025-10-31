@@ -1,4 +1,3 @@
-import 'package:example/page/home_page.dart';
 import 'package:example/util/AppNavigator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Route Manager',
       navigatorKey: AppNavigator.navigatorKey,
-      navigatorObservers: [RouteManagerObserver()],
+      navigatorObservers: [
+        RouteManagerObserver(),
+      ],
       initialRoute: AppRouter.initial,
       routes: AppRouter.routeMap,
       onUnknownRoute: (RouteSettings settings) {
@@ -27,7 +28,6 @@ class MyApp extends StatelessWidget {
         );
       },
       theme: buildTheme(),
-      home: const HomePage(title: 'Home Page'),
     );
   }
 
