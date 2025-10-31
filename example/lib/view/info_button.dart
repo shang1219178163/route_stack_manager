@@ -33,7 +33,7 @@ class _InfoButtonState extends State<InfoButton> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: const Icon(
-          Icons.error_outline,
+          Icons.info_outline,
           // size: 24,
         ),
       ),

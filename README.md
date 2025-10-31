@@ -21,17 +21,17 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
 
   @override
   void onRouteBeforeListener({Route? from, Route? to}) {
-    DLog.d("$widget onRouteBeforeListener ${[from, to]
+    DLog.d([from, to]
         .map((e) => e?.settings.name)
-        .join(" >> ")}");
+        .join(" >> "));
   }
 
   @override
   void onRouteListener({Route? from, Route? to}) {
-    DLog.d("$widget initState ${[
+    DLog.d([
       RouteManager().preRouteName,
       RouteManager().currentRouteName
-    ].join(" >>> ")}");
+    ].join(" >>> "));
   }
   
   @override

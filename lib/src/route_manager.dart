@@ -206,7 +206,7 @@ class RouteManagerObserver extends RouteObserver<PageRoute<dynamic>> {
     super.didPop(route, previousRoute);
     RouteManager().pop(route);
 
-    RouteManager().notifyListeners(from: previousRoute, to: route);
+    RouteManager().notifyListeners(from: route, to: previousRoute);
     RouteManager().logRoutes();
   }
 

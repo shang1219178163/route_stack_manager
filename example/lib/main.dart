@@ -1,6 +1,5 @@
-import 'package:example/page/page_one.dart';
-import 'package:example/util/dlog.dart';
-import 'package:example/view/info_button.dart';
+import 'package:example/page/home_page.dart';
+import 'package:example/util/AppNavigator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
@@ -16,12 +15,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      navigatorObservers: [
-        RouteManagerObserver(),
-      ],
+      title: 'Flutter Route Manager',
+      navigatorKey: AppNavigator.navigatorKey,
+      navigatorObservers: [RouteManagerObserver()],
+      initialRoute: AppRouter.initial,
+      routes: AppRouter.routeMap,
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute<void>(
+          settings: settings,
+          builder: AppNavigator.unknownPageBuilder,
+        );
+      },
       theme: buildTheme(),
-      home: const MyHomePage(title: 'Home Page'),
+      home: const HomePage(title: 'Home Page'),
     );
   }
 
@@ -49,56 +55,5 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final scrollController = ScrollController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: const [InfoButton()],
-      ),
-      body: buildBody(),
-    );
-  }
-
-  Widget buildBody() {
-    return Scrollbar(
-      controller: scrollController,
-      child: SingleChildScrollView(
-        controller: scrollController,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            OutlinedButton(onPressed: onNext, child: const Text("next")),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<void> onNext() async {
-    final result = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const PageOne(),
-        settings: const RouteSettings(
-          name: "/PageOne",
-        ),
-      ),
-    );
-    DLog.d("$widget result: $result");
   }
 }

@@ -9,8 +9,8 @@
 import 'package:example/view/info_button.dart';
 import 'package:flutter/material.dart';
 
-class PageUnknow extends StatefulWidget {
-  const PageUnknow({
+class UnknownPage extends StatefulWidget {
+  const UnknownPage({
     super.key,
     this.arguments,
   });
@@ -18,10 +18,10 @@ class PageUnknow extends StatefulWidget {
   final Map<String, dynamic>? arguments;
 
   @override
-  State<PageUnknow> createState() => _PageUnknowState();
+  State<UnknownPage> createState() => _UnknownPageState();
 }
 
-class _PageUnknowState extends State<PageUnknow> {
+class _UnknownPageState extends State<UnknownPage> {
   final scrollController = ScrollController();
 
   /// 数组
@@ -30,7 +30,7 @@ class _PageUnknowState extends State<PageUnknow> {
   ];
 
   @override
-  void didUpdateWidget(covariant PageUnknow oldWidget) {
+  void didUpdateWidget(covariant UnknownPage oldWidget) {
     super.didUpdateWidget(oldWidget);
   }
 

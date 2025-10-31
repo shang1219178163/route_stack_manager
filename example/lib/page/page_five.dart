@@ -6,13 +6,12 @@
 //  Copyright © 2024/9/28 shang. All rights reserved.
 //
 
-import 'package:example/page/page_unknow.dart';
+import 'package:example/util/AppNavigator.dart';
 import 'package:example/view/info_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
 
-import '../util/dlog.dart';
 
 class PageFive extends StatefulWidget {
   const PageFive({
@@ -41,12 +40,12 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
 
   @override
   void onRouteBeforeListener({Route? from, Route? to}) {
-    DLog.d("$widget onRouteBeforeListener ${[from, to].map((e) => e?.settings.name).join(" >> ")}");
+    DLog.d([from?.settings.name, to?.settings.name].join(" >>> "));
   }
 
   @override
   void onRouteListener({Route? from, Route? to}) {
-    DLog.d("$widget initState ${[RouteManager().preRouteName, RouteManager().currentRouteName].join(" >>> ")}");
+    DLog.d([from?.settings.name, to?.settings.name].join(" >>> "));
   }
 
   @override
@@ -95,24 +94,21 @@ class _PageFiveState extends State<PageFive> with RouteListenterMixin {
     DLog.d("onDelete before: ${RouteManager().routeNames}");
 
     final route = RouteManager().routes[1];
-    Navigator.of(context).removeRoute(route);
+    AppNavigator.removeRoute(route);
 
     DLog.d("onDelete: ${RouteManager().routeNames}");
   }
 
-  void onReplace() {
+  Future<void> onReplace() async {
     DLog.d("onReplace before: ${RouteManager().routeNames}");
 
-    // Navigator.of(context).replace(oldRoute: route1, newRoute: route2);
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const PageUnknow(), settings: const RouteSettings(name: "/pageUnknow")),
-    );
+    await AppNavigator.offNamed(AppRouter.unknown);
     DLog.d("onReplace: ${RouteManager().routeNames}");
   }
 
-  void onPopUntil() {
-    Navigator.of(context).popUntil(ModalRoute.withName("/PageTwo"));
-    DLog.d("onReplace: ${RouteManager().routeNames}");
+  Future<void> onPopUntil() async {
+    AppNavigator.until(ModalRoute.withName(AppRouter.pageTwo));
+    DLog.d(RouteManager().routeNames);
   }
 
   Future<void> onShowDialog() async {

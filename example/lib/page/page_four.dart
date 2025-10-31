@@ -6,11 +6,11 @@
 //  Copyright © 2024/9/28 shang. All rights reserved.
 //
 
-import 'package:example/util/dlog.dart';
-import 'package:example/page/page_five.dart';
 import 'package:example/view/info_button.dart';
 import 'package:flutter/material.dart';
 import 'package:route_stack_manager/route_stack_manager.dart';
+
+import '../util/AppNavigator.dart';
 
 class PageFour extends StatefulWidget {
   const PageFour({
@@ -29,12 +29,12 @@ class _PageFourState extends State<PageFour> with RouteListenterMixin {
 
   @override
   void onRouteBeforeListener({Route? from, Route? to}) {
-    DLog.d("$widget onRouteBeforeListener ${[from, to].map((e) => e?.settings.name).join(" >> ")}");
+    DLog.d([from?.settings.name, to?.settings.name].join(" >>> "));
   }
 
   @override
   void onRouteListener({Route? from, Route? to}) {
-    DLog.d("$widget onRouteListener ${[RouteManager().preRouteName, RouteManager().currentRouteName].join(" >>> ")}");
+    DLog.d([from?.settings.name, to?.settings.name].join(" >>> "));
   }
 
   @override
@@ -69,12 +69,7 @@ class _PageFourState extends State<PageFour> with RouteListenterMixin {
   }
 
   Future<void> onNext() async {
-    final result = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const PageFive(),
-      settings: const RouteSettings(
-        name: "/PageFive",
-      ),
-    ));
-    DLog.d("$widget result: $result");
+    final result = await AppNavigator.toNamed(AppRouter.pageFive);
+    DLog.d("result: $result");
   }
 }
